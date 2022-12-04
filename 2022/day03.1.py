@@ -9,10 +9,9 @@ with open("2022/input_files/day03") as f:
         print(f"comp 2 = {comp2}")
         common_item = " "
         for item1 in comp1:
-            for item2 in comp2:
-                if item1 == item2:
-                    common_item = item1
-                    break
+            if item1 in comp2:
+                common_item = item1
+                break
         print(f"Common item: {common_item}")
         priority = 0
         if common_item >= "a" and common_item <= "z":
