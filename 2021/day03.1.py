@@ -15,6 +15,7 @@ with open("2021/input_files/day03") as f:
 for i in range(len(all_data[0])):
     nb_1 = 0
     nb_0 = 0
+    # Should have used Counter and most_common
     for data in all_data:
         nb_1 += 1 if data[i] == "1" else 0
         nb_0 += 1 if data[i] == "0" else 0

@@ -9,12 +9,28 @@ int("011001", 2)
 ord("a")  # 97
 chr(97)  # 'a'
 
+# Template if it's better to work directly on each line
+res = 0
+with open("2021/input_files/day01") as f:
+    for data in f:
+        data = data.rstrip()
+print(f"{res=}")
+
 # Template if it's better to have a list in input
 with open("2022/input_files/day04t") as f:
     lines = [line.rstrip() for line in f]
 for line in lines:
     pass
 
+# Template if there are groups separated by empty line
+with open("2021/input_files/day04t") as f:
+    data = "".join([line for line in f])
+    groups = [group.split("\n") for group in data.split("\n\n")]
+
+# Initialize 2 dimension list
+grid = [[0] * 1000 for i in range(1000)]
+
+# Misc
 
 import fileinput
 
