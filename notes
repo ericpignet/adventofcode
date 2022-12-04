@@ -1,0 +1,33 @@
+# Binary operations
+# It's often easier to work with strings of 0 and 1
+# From integer to binary string:   [2:] is to remove the 0b prefix
+bin(1234)[2:]
+# From binary string to integer:
+int("011001", 2)
+
+# ASCII operations
+ord("a")  # 97
+chr(97)  # 'a'
+
+# Template if it's better to have a list in input
+with open("2022/input_files/day04t") as f:
+    lines = [line.rstrip() for line in f]
+for line in lines:
+    pass
+
+
+import fileinput
+
+# INPUT = [line.strip() for line in fileinput.input()]
+with open("2021/input_files/day01") as f:
+    INPUT = [line.strip() for line in f]
+    for data in INPUT:
+        data = int(data.strip())
+
+
+total = 0
+with open("2022/input_files/day04") as f:
+    for data in f:
+        data = data.strip()
+
+print(f"Total: {total}")
