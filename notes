@@ -1,3 +1,7 @@
+####################################################################
+# Templates
+####################################################################
+
 # Template if it's better to work directly on each line
 res = 0
 with open("2021/input_files/day01") as f:
@@ -20,6 +24,10 @@ with open("2021/input_files/day04t") as f:
 with open("2021/input_files/day07t") as f:
     ages = list(map(int, f.readline().rstrip().split(",")))
 
+####################################################################
+# Misc
+####################################################################
+
 # Binary operations
 # It's often easier to work with strings of 0 and 1
 # From integer to binary string:   [2:] is to remove the 0b prefix
@@ -31,17 +39,75 @@ int("011001", 2)
 ord("a")  # 97
 chr(97)  # 'a'
 
+####################################################################
+# Containers
+####################################################################
+
+# Theory https://stackoverflow.com/questions/2920619/difference-between-list-sequence-and-slice-in-python
+# iterable interface has three descendants:
+# - sequence (random access by int, can be sliced)
+#   - list
+#   - tuple
+#   - str
+# - mapping (access via keys, no slicing)
+#   - dict
+# - set (unordered)
+# - generator (most basic type, no random access, no slicing)
+#   - created by generator expressions or yield
+# All iterables can be used with an iterator (which has the same interface as the most basic type they support/generator)
+
+a_list = []
 # Initialize list of objects (can't use [list()]*1000 because it would be 1000 times the same ref)
 stacks = [list() for i in range(1000)]
 # Initialize 2 dimension list
 grid = [[0] * 1000 for i in range(1000)]
 # Copy list without reference
-second_list = first_list.copy()
+second_list = a_list.copy()
 # Top level functions which work on lists: min, max, len, all, any, sum, map (which allows to do anything)
 # https://docs.python.org/3/library/functions.html
 
+# to remove items from a list while iterating on it: start by the end
+def reverse_range(a_list):
+    return range(len(a_list) - 1, -1, -1)
+
+
+for i in reverse_range(a_list):
+    # bla bla
+    del a_list[i]
+
+#####################
+# dict
+a_dict = {}
+a_dict.keys()
+a_dict.values()
+a_dict.items()
+for key in a_dict:
+    # we have access to the values too
+    print(a_dict[key])
+for key, value in a_dict.items():  # gives directly both
+    pass
+# reversed map:
+reverse_dict = {v: k for k, v in a_dict.items()}
+
+#####################
+# set
+a_set = set()
+b_set = {1, 2}  # can be initialized with curly brackets
+a_set.issubset([1, 2])  # if all items of a_set are in the other iterable
+a_set | b_set  # union
+a_set & b_set  # intersection
+a_set - b_set  # difference
+a_set ^ b_set  # symetric_difference
+a_set <= b_set  # issubset
+a_set >= b_set  # issuperset
+
+####################################################################
+# Math
+####################################################################
+
 # Math stuff
 import math
+
 test = math.inf  # infinity
 
 # Break multiple looks
@@ -51,7 +117,7 @@ class GetOutOfLoop(Exception):
 
 try:
     for i in range(10):
-        for j in range(20:)
+        for j in range(20):
             if i == j:
                 raise GetOutOfLoop
 except GetOutOfLoop:
@@ -66,4 +132,3 @@ with open("2021/input_files/day01") as f:
     INPUT = [line.strip() for line in f]
     for data in INPUT:
         data = int(data.strip())
-

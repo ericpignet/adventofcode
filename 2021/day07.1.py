@@ -12,5 +12,5 @@ for pos in range(min_pos, max_pos + 1):
         fuel += abs(pos - crab)
     if fuel < min_fuel:
         min_fuel = fuel
-1
+
 print(f"{min_fuel=}")
