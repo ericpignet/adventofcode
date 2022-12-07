@@ -56,6 +56,11 @@ chr(97)  # 'a'
 #   - created by generator expressions or yield
 # All iterables can be used with an iterator (which has the same interface as the most basic type they support/generator)
 
+# Top level functions which work on lists: min, max, len, all, any, sum, map (which allows to do anything)
+# https://docs.python.org/3/library/functions.html
+
+###################
+# list
 a_list = []
 # Initialize list of objects (can't use [list()]*1000 because it would be 1000 times the same ref)
 stacks = [list() for i in range(1000)]
@@ -63,8 +68,10 @@ stacks = [list() for i in range(1000)]
 grid = [[0] * 1000 for i in range(1000)]
 # Copy list without reference
 second_list = a_list.copy()
-# Top level functions which work on lists: min, max, len, all, any, sum, map (which allows to do anything)
-# https://docs.python.org/3/library/functions.html
+# Search in list
+value_found = next(x for x in a_list if x.name == "something")
+# Sort in place (reverse)
+a_list.sort(reverse=True)
 
 # to remove items from a list while iterating on it: start by the end
 def reverse_range(a_list):
@@ -110,6 +117,27 @@ import math
 
 test = math.inf  # infinity
 
+####################################################################
+# Classes
+####################################################################
+
+
+class Node:
+    def __init__(self, name, is_dir, parent=None, size=0):
+        self.children = []
+        self.name = name
+        self.is_dir = is_dir
+        self.size = size
+        self.parent = parent
+
+    def double_size(self):
+        return self.size * 2
+
+
+####################################################################
+# Misc
+####################################################################
+
 # Break multiple looks
 class GetOutOfLoop(Exception):
     pass
@@ -122,13 +150,3 @@ try:
                 raise GetOutOfLoop
 except GetOutOfLoop:
     pass
-
-# Misc
-
-import fileinput
-
-# INPUT = [line.strip() for line in fileinput.input()]
-with open("2021/input_files/day01") as f:
-    INPUT = [line.strip() for line in f]
-    for data in INPUT:
-        data = int(data.strip())
