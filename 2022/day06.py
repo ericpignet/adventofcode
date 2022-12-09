@@ -12,6 +12,7 @@ for i in range(start_packet_size - 1, len(datastream)):
         if last_packet.count(last_packet[j]) > 1:
             found = False
             break
+    # 'found' is not needed, could be replaced by else
     if found:
         break
 i += 1
