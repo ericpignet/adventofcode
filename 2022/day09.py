@@ -1,3 +1,6 @@
+# https://adventofcode.com/2022/day/9
+
+
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -34,9 +37,6 @@ with open("2022/input_files/day09") as f:
 
 visited = set()
 
-# Part 1
-# size_tail = 1
-# Part 2
 size_tail = 9
 
 H = [Point(0, 0) for _ in range(size_tail + 1)]

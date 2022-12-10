@@ -1,3 +1,5 @@
+# https://adventofcode.com/2022/day/3
+
 total_priorities = 0
 with open("2022/input_files/day03") as f:
     while True:

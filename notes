@@ -63,9 +63,9 @@ chr(97)  # 'a'
 # list
 a_list = []
 # Initialize list of objects (can't use [list()]*1000 because it would be 1000 times the same ref)
-stacks = [list() for i in range(1000)]
+stacks = [list() for _ in range(1000)]
 # Initialize 2 dimension list
-grid = [[0] * 1000 for i in range(1000)]
+grid = [[0] * 1000 for _ in range(1000)]
 # Copy list without reference
 second_list = a_list.copy()
 # Search in list
@@ -141,6 +141,11 @@ class Node:
 ####################################################################
 # Other misc
 ####################################################################
+
+# Deep copy of a list, when you need to copy each element
+import copy
+
+b_list = copy.deepcopy(a_list)
 
 # Break multiple looks
 class GetOutOfLoop(Exception):
