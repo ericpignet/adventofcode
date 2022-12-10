@@ -4,36 +4,26 @@ class Point:
         self.y = y
 
 
+def get_closer(H: Point, T: Point, axis: str, aligned: bool) -> bool:
+    diff = getattr(T, axis) - getattr(H, axis)
+    if abs(diff) == 2:
+        get_closer_by_1(H, T, axis)
+        if not aligned:
+            get_closer_by_1(H, T, "y" if axis == "x" else "x")
+        return True
+    return False
+
+
+def get_closer_by_1(H: Point, T: Point, axis):
+    setattr(
+        T, axis, getattr(T, axis) + (1 if getattr(H, axis) > getattr(T, axis) else -1)
+    )
+
+
 def follow(H: Point, T: Point):
     aligned = T.x == H.x or T.y == H.y
-    if T.y == H.y - 2:
-        T.y += 1
-        if not aligned:
-            if T.x < H.x:
-                T.x += 1
-            elif T.x > H.x:
-                T.x -= 1
-    if T.x == H.x + 2:
-        T.x -= 1
-        if not aligned:
-            if T.y < H.y:
-                T.y += 1
-            elif T.y > H.y:
-                T.y -= 1
-    if T.x == H.x - 2:
-        T.x += 1
-        if not aligned:
-            if T.y < H.y:
-                T.y += 1
-            elif T.y > H.y:
-                T.y -= 1
-    if T.y == H.y + 2:
-        T.y -= 1
-        if not aligned:
-            if T.x < H.x:
-                T.x += 1
-            elif T.x > H.x:
-                T.x -= 1
+    if not get_closer(H, T, "y", aligned):
+        get_closer(H, T, "x", aligned)
 
 
 inputs = []

@@ -114,7 +114,9 @@ a_set >= b_set  # issuperset
 # Math
 ####################################################################
 
-# Math stuff
+# Integer division
+i = 5 // 2  # return 2
+
 import math
 
 test = math.inf  # infinity
