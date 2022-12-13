@@ -56,7 +56,7 @@ chr(97)  # 'a'
 #   - created by generator expressions or yield
 # All iterables can be used with an iterator (which has the same interface as the most basic type they support/generator)
 
-# Top level functions which work on iterable: min, max, len, all, any, sum, map (which allows to do anything)
+# Top level functions which work on iterable: min, max, len, all, any, sum, map (executes function on all items)
 # https://docs.python.org/3/library/functions.html
 
 ###################
@@ -120,6 +120,7 @@ i = 5 // 2  # return 2
 import math
 
 test = math.inf  # infinity
+test = math.prod([monkey.test for monkey in a_list])  # multiply items of a list
 
 ####################################################################
 # Classes
@@ -159,3 +160,69 @@ try:
                 raise GetOutOfLoop
 except GetOutOfLoop:
     pass
+
+
+####################################################################
+# BFS with path
+####################################################################
+
+# graph is in adjacent list representation
+graph = {
+    "1": ["2", "3", "4"],
+    "2": ["5", "6"],
+    "5": ["9", "10"],
+    "4": ["7", "8"],
+    "7": ["11", "12"],
+}
+
+
+def bfs(graph, start, end):
+    # maintain a queue of paths
+    queue = []
+    # push the first path into the queue
+    queue.append([start])
+    while queue:
+        # get the first path from the queue
+        path = queue.pop(0)
+        # get the last node from the path
+        node = path[-1]
+        # path found
+        if node == end:
+            return path
+        # enumerate all adjacent nodes, construct a
+        # new path and push it into the queue
+        for adjacent in graph.get(node, []):
+            new_path = list(path)
+            new_path.append(adjacent)
+            queue.append(new_path)
+
+
+print(bfs(graph, "1", "11"))
+
+# OR
+
+graph = {
+    "A": set(["B", "C"]),
+    "B": set(["A", "D", "E"]),
+    "C": set(["A", "F"]),
+    "D": set(["B"]),
+    "E": set(["B", "F"]),
+    "F": set(["C", "E"]),
+}
+
+
+def retunShortestPath(graph, start, end):
+
+    queue = [(start, [start])]
+    visited = set()
+
+    while queue:
+        vertex, path = queue.pop(0)
+        visited.add(vertex)
+        for node in graph[vertex]:
+            if node == end:
+                return path + [end]
+            else:
+                if node not in visited:
+                    visited.add(node)
+                    queue.append((node, path + [node]))

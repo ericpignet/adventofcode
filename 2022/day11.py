@@ -4,7 +4,7 @@ from typing import List
 from collections import deque
 import math
 
-part = 1
+part = 2
 
 
 class Monkey:
@@ -77,5 +77,5 @@ for cycle in range(20 if part == 1 else 10000):
         print(f"{cycle=}")
 
 monkeys.sort(key=lambda x: x.nbInspections, reverse=True)
-part1_monkey_business = monkeys[0].nbInspections * monkeys[1].nbInspections
-print(f"{part1_monkey_business=}")
+monkey_business = monkeys[0].nbInspections * monkeys[1].nbInspections
+print(f"{monkey_business=}")
