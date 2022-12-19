@@ -16,11 +16,9 @@ def evalLevel(exp1, exp2):
         else:
             return False, False
     elif isinstance(exp1, int) and isinstance(exp2, list):
-        exp1 = [exp1]
-        return evalLevel(exp1, exp2)
+        return evalLevel([exp1], exp2)
     elif isinstance(exp1, list) and isinstance(exp2, int):
-        exp2 = [exp2]
-        return evalLevel(exp1, exp2)
+        return evalLevel(exp1, [exp2])
     elif isinstance(exp1, list) and isinstance(exp2, list):
         for i, elt in enumerate(exp1):
             if len(exp2) <= i:
@@ -70,4 +68,4 @@ for i, packet in enumerate(all_pairs):
         break
 
 print(f"{part1_sum_indices=}")
-print(f"part 2: {decoder1*decoder2=}")
+print(f"part 2: {decoder1*decoder2}")
