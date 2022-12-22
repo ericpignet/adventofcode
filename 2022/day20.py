@@ -26,9 +26,7 @@ is_part_2 = True
 original_sequence = []
 with open("2022/input_files/day20") as f:
     for data in f:
-        n = int(data.rstrip())
-        if is_part_2:
-            n *= 811589153
+        n = int(data.rstrip()) * (811589153 if is_part_2 else 1)
         c = [x[0] for x in original_sequence].count(n)
         original_sequence.append((n, c))
 
@@ -49,8 +47,7 @@ for _ in range(10 if is_part_2 else 1):
 
         # fast
         old_index = sequence.index((n, occurence))
-        new_index = old_index + n
-        new_index %= len(sequence) - 1
+        new_index = (old_index + n) % (len(sequence) - 1)
 
         if new_index == 0:
             new_index = len(sequence) - 1
