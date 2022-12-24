@@ -1,16 +1,13 @@
 # https://adventofcode.com/2022/day/24
-# 249
+# part 1: 249
+# part 2: trip1=249 trip2=246 trip3=240 (trip1+trip2+trip3)=735
 
 import copy
 from collections import deque
 
-prune = False
-prune_value = 100000
 grid = []
-with open("2022/input_files/day24tt") as f:
+with open("2022/input_files/day24") as f:
     for line in f:
-        # row =
-        # for c in line.rstrip()
         row = []
         for c in line.rstrip():
             tile = {"#": 0, ">": 0, "<": 0, "v": 0, "^": 0, "f": 1}
@@ -18,11 +15,9 @@ with open("2022/input_files/day24tt") as f:
                 tile[c] += 1
                 tile["f"] = 0  # means it is not free
             row.append(tile)
+        row = list(map(lambda x: {x: 1} if x != "." else {}, line.rstrip()))
         grid.append(row)
-        # data = list(map(lambda x: {x: 1} if x != "." else {}, line.rstrip()))
-        # grid.append(data)
 
-# def moveBy1(grid, new_grid, x, y):
 width = len(grid[0])
 height = len(grid)
 
@@ -44,6 +39,8 @@ def display_grid(grid, me_x, me_y):
                 print("E", end="")
             elif tile["#"] > 0:
                 print("#", end="")
+            elif tile["f"] == 1:
+                print(".", end="")
             elif sum(tile.values()) > 1:
                 print(sum(tile.values()), end="")
             elif sum(tile.values()) == 1:
@@ -88,50 +85,38 @@ def free_neighbours(grid, x, y):
         yield (x, y)
 
 
-visited = set()
-number_calls = 0
-
-
 def bfs(grid, start, end):
     queue = deque([(start[0], start[1], 0)])
     old_steps = -1
     while queue:
-        global number_calls
-        number_calls += 1
-
         me_x, me_y, steps = queue.popleft()
+
         if steps > old_steps:
-            print(f"{steps=} {len(queue)=}")
+            # print(f"{steps=} {len(queue)=}")
 
             # check dupes
             queue_as_set = set(queue)
             if len(queue) != len(queue_as_set):
                 queue = deque(queue_as_set)
 
-            if prune:
-                # Trim the queue
-                l = list(queue)
-                l.sort(key=lambda x: x[0] + x[1], reverse=True)
-                queue = deque(l[:prune_value])
-
             grid = update_grid(grid)
+            # display_grid(grid, me_x, me_y)
             old_steps = steps
 
-        if (me_x, me_y) == end:
-            print(f"Nice! We found it in {steps} steps")
-            return steps
-        # display_grid(new_grid, me_x, me_y)
-
         for tile in free_neighbours(grid, me_x, me_y):
-            if True:  # tile not in visited:
-                # visited.add(tile)
-                queue.append((tile[0], tile[1], steps + 1))
+            if (tile[0], tile[1]) == end:
+                print(f"Nice! We found it in {steps+1} steps")
+                return grid, steps + 1
+            queue.append((tile[0], tile[1], steps + 1))
 
 
-trip1 = bfs(grid, (1, 0), (width - 2, height - 1))
+display_grid(grid, 1, 0)
+grid, trip1 = bfs(grid, (1, 0), (width - 2, height - 1))
 
-trip2 = bfs(grid, (width - 2, height - 1), (1, 0))
+display_grid(grid, width - 2, height - 1)
+grid, trip2 = bfs(grid, (width - 2, height - 1), (1, 0))
 
-trip3 = bfs(grid, (1, 0), (width - 2, height - 1))
+display_grid(grid, 1, 0)
+grid, trip3 = bfs(grid, (1, 0), (width - 2, height - 1))
 
 print(f"{trip1=} {trip2=} {trip3=} {(trip1+trip2+trip3)=}")
