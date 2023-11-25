@@ -1,5 +1,5 @@
 import re
-# 225 too high
+
 with open("2020/input_files/day04") as f:
     data = "".join([line for line in f])
     raw_passports = [group for group in data.split("\n\n")]
