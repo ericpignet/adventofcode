@@ -99,7 +99,7 @@ reverse_dict = {v: k for k, v in a_dict.items()}
 #####################
 # set
 a_set = set()
-b_set = {1, 2}  # can be initialized with curly brackets
+b_set = {1, 2}  # can be initialized with curly brackets only if not empty
 a_set.add(3)
 a_set.update(b_set)  # add elements from another iterable
 a_set.issubset([1, 2])  # if all items of a_set are in the other iterable
@@ -109,6 +109,11 @@ a_set - b_set  # difference
 a_set ^ b_set  # symetric_difference
 a_set <= b_set  # issubset
 a_set >= b_set  # issuperset
+
+####################
+# str
+a_str = "abca"
+a_str.count("a")
 
 ####################################################################
 # Math
@@ -145,13 +150,11 @@ class Node:
 
 # Deep copy of a list, when you need to copy each element
 import copy
-
 b_list = copy.deepcopy(a_list)
 
 # Break multiple looks
 class GetOutOfLoop(Exception):
     pass
-
 
 try:
     for i in range(10):
@@ -226,3 +229,64 @@ def retunShortestPath(graph, start, end):
                 if node not in visited:
                     visited.add(node)
                     queue.append((node, path + [node]))
+
+####################################################################
+# Regular Expressions (regex)
+####################################################################
+
+# Useful tool to debug your Regex: https://regex101.com/
+
+# \   Used to drop the special meaning of character
+#     following it (discussed below)
+# []  Represent a character class
+# ^   Matches the beginning
+# $   Matches the end
+# .   Matches any character except newline
+# ?   Matches zero or one occurrence.
+# |   Means OR (Matches with any of the characters
+#     separated by it.
+# *   Any number of occurrences (including 0 occurrences)
+# +   One or more occurrences
+# {}  Indicate number of occurrences of a preceding RE 
+#     to match.
+# ()  Enclose a group of REs
+
+# \   IF digit or letter: special meaning
+#     ELSE second character is matched (e.g. \$ means $ character)
+# \d  Decimal digit [0-9]
+# \D  Not a decimal digit
+# \s  White space (inc. tab, end of line...)
+# \S  Not a white space
+# \w  Word character [a-zA-Z0-9_]
+# \W  Not a word character
+# \x1c Hexa binary character 1C
+
+import re
+
+#######################
+# re.match()    Search first match from beginning of string only
+# re.search()   Search first match in the middle of a string
+
+# Can be used to check if it matches
+match = re.search(r"\d+-\d+ \w: \w+", "1-3 b: cdefg")
+# match.start() and match.end()  return the index where match starts and ends
+print(match != None)  # Matches
+print(f"{match.start()=} {match.end()=}")
+
+# Or to capture matching parts
+match = re.search(r"(\d+)-(\d+) (\w): (\w+)", "1-3 b: cdefg")
+print(f"{match.group(0)=}")   # group(0) always return the full matched string
+# group(1) and more returns the matching parts
+print(f"{match.group(1)=} {match.group(2)=} {match.group(3)=}{match.group(4)=}")
+
+# You can name the parts as well
+match = re.search(r"(?P<min>\d+)-(?P<max>\d+) (?P<char>\w): (?P<password>\w+)", "1-3 b: cdefg")
+print(f"{match.groupdict()=}")
+#######################
+#re.findall() 
+
+# used to find all occurences of a word matching the regex, in a bigger string
+# returns all non-overlapping matches of pattern in string, as a list of strings
+matches = re.findall(r"\d+-\d+", "This is a sequence: 1-3 and this is another one 2-4")
+print(matches)
+# ['1-3', '2-4']
